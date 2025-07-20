@@ -274,7 +274,11 @@ while True:
             escolha_contas = input("Escolha uma opção: ")
 
             if escolha_contas == "1":
-                conta = int(input("Digite a conta que você deseja acessar: "))
+                try:
+                    conta = int(input("Digite a conta que você deseja acessar: "))
+                except ValueError:
+                    print("Conta inválida.")
+                    break
 
                 if validador_contas(cpf, conta):
                     operacoes(conta)
