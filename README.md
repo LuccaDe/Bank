@@ -31,7 +31,8 @@ Trata-se de uma versão inicial de um sistema bancário simples em terminal, com
 - Refatorar o código usando os paradigmas **funcional** e **orientado a objetos**
 - Adicionar múltiplos usuários com autenticação simples
 - Implementar persistência de dados em arquivos (`.json`, `.csv` ou `.txt`)
-- Melhorar a interface no terminal com bibliotecas (como `rich` ou `typer`)
+- Melhoria de interface
+- Criação de contas
 
 ## 📂 Como executar
 
@@ -39,3 +40,24 @@ Trata-se de uma versão inicial de um sistema bancário simples em terminal, com
 2. Clone este repositório:
    ```bash
    git clone https://github.com/LuccaDe/Bank.git
+3. Acesse a pasta do projeto:
+   ```bash
+   cd Bank
+   ```
+4. Execute o script principal:
+   ```bash
+   python bank.py
+   ```
+
+---
+
+## 🤝 Contribuindo
+
+Sugestões, feedbacks e ideias são muito bem-vindos!  
+Sinta-se à vontade para abrir uma issue, comentar ou fazer um fork.
+
+---
+
+**Bootcamp Santander | DIO**  
+Projeto: Sistema Bancário com Python  
+Desenvolvido por [@LuccaDe](https://github.com/LuccaDe)
