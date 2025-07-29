@@ -1,4 +1,4 @@
-# Luca's Bank 💰 (v2)
+# Luca's Bank 💰 - Versão 2
 
 Este é um projeto em Python desenvolvido como parte do **Bootcamp Santander | DIO - Backend com Python**.
 
