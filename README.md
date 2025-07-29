@@ -1,74 +1,116 @@
-# Luca's Bank 💰 (v2)
+# Luca’s Bank 💰 – Versão 3
 
 Este é um projeto em Python desenvolvido como parte do **Bootcamp Santander | DIO - Backend com Python**.
 
-Nesta segunda versão, o sistema bancário foi expandido para oferecer funcionalidades mais completas, como **cadastro de usuários**, **vinculação de múltiplas contas por CPF**, e **operações bancárias separadas por conta**.
+Este repositório contém a **terceira versão** do *Luca’s Bank*, um sistema bancário de linha de comando desenvolvido em Python, focado em boas práticas de Programação Orientada a Objetos (POO) e experiência do usuário.
 
-Tudo isso ainda utilizando uma interface simples via terminal.
+## 🛠 Funcionalidades
 
+* **Cadastro de Usuário (Pessoa Física)**
 
-## 📌 Funcionalidades e regras
+  * Validação de CPF com dígitos verificadores
+  * Entrada de data de nascimento formatada
+  * Endereço completo (rua, número, bairro, cidade/estado)
+* **Gerenciamento de Contas**
 
-- **Cadastro de usuários** com CPF, nome, data de nascimento e endereço completo.
-- **Criação de múltiplas contas** bancárias para um mesmo usuário.
-- Operações bancárias por conta individual:
-  - **Depósito**:
-    - Valor mínimo de R$ 1,00
-  - **Saque**:
-    - Máximo de 3 saques por dia
-    - Limite de R$ 500,00 por saque
-    - Valor mínimo de R$ 1,00
-    - Não é permitido sacar mais do que o saldo disponível
-  - **Extrato** com histórico de transações e saldo atualizado.
-- **Validação de CPF** e verificação de contas associadas ao usuário.
-- Interface limpa com mensagens claras e pausa entre operações para facilitar a leitura.
+  * Várias contas por usuário
+  * Geração automática de agência (código aleatório) e número sequencial de conta
+* **Operações Bancárias**
 
+  * Depósito: mínimo R\$ 1, registro em histórico
+  * Saque: mínimo R\$ 1, limite por valor e quantidade diária, registro em histórico
+* **Histórico de Transações**
 
-## 💡 O que foi praticado até aqui
+  * Exibição de tipo (Depósito/Saque), valor e timestamp local (fuso horário do usuário)
+  * Saldo disponível exibido junto
+* **Navegação via Menus CLI**
 
-- Modularização com **funções bem definidas** e responsabilidades separadas
-- Simulação de **cadastro e autenticação simples**
-- Manipulação de **listas de dicionários** para representar usuários e contas
-- Validação de entrada e controle de fluxo com `try/except`
-- Uso de `os.system()` e `sleep()` para melhorar a experiência no terminal
-- Parâmetros posicionais e nomeados em funções (`/` e `*`)
-- Regras de negócio mais robustas e realistas
+  * Menus de criação, acesso a contas e operações internas
+  * Uso de `match/case` para fluxo de seleção
 
+## ⚙️ Estrutura do Código
 
-## 🛠️ Tecnologias
+* **`Menus`**: Strings constantes para exibição de menus.
+* **`Conta` / `ContaCorrente`**: Lógica de saldo, limites e contador de saques.
+* **`Cliente` / `PessoaFisica`**: Armazenamento de contas e método `realizar_transacao`.
+* **`Historico`**: Registro e impressão de transações com data/hora local.
+* **`Transacao`** (abstrata) e classes **`Deposito`**, **`Saque`**.
+* **`Sessao`**: Controla o fluxo principal, validação de CPF, criação e acesso de contas.
 
-- Python 3.13 (sem dependências externas)
+## 🗒️ Changelog (V2 → V3)
 
+* Adicionado timestamp local em cada transação
+* Centralização da lógica de transação em `Cliente.realizar_transacao`
+* Validação de data de nascimento com `datetime.strptime`
+* Aprimoramentos gerais de UX (mensagens e espaçamentos)
 
-## 📈 Próximos passos
+## 📈 Próximos Passos
 
-- Refatoração para uso de **classes** (Paradigma Orientado a Objetos)
-- Implementação de **persistência de dados** (em arquivos `.json` ou `.csv`)
-- Criação de uma interface mais amigável via terminal com bibliotecas como `rich` ou `typer`
-- Validação real de CPF (com cálculo dos dígitos verificadores)
-- Geração automática de extrato em arquivo `.txt` ou `.pdf`
+* Persistência em JSON/CSV para manter dados entre sessões
+* Autenticação com senha/encriptação básica
+* Interface aprimorada com `Typer` ou `Rich`
+* Testes automatizados com `pytest`
 
+## 📂 Como Executar
 
-## 📂 Como executar
+1. **Clone o repositório e acesse a branch v3**:
 
-1. Certifique-se de ter o Python 3 instalado na sua máquina.
-2. Clone este repositório:
    ```bash
    git clone https://github.com/LuccaDe/Bank.git
-   ```
-3. Acesse a pasta do projeto:
-   ```bash
    cd Bank
+   git checkout v3
    ```
-4. Acesse a branch da versão 2:
-   ```bash
-   git checkout v2
-   ```
-4. Execute o script principal:
-   ```bash
-   python bank_v2.py
-   ```
+2. **Verifique sua versão do Python** (recomendado 3.9+):
 
+   ```bash
+   python --version
+   ```
+3. **Execute o script principal**:
+
+   ```bash
+   python bank_v3.py
+   ```
+4. **Siga as instruções na tela** para cadastrar usuário, criar/selecionar conta e realizar operações.
+
+## 📈 Exemplos de Uso
+
+```text
+$ python bank_v3.py
+
+Bem-Vindo(a) ao Luca's Bank
+
+[1] Já sou cliente
+[2] Quero me cadastrar
+[0] Sair
+
+Escolha uma operação: 2
+
+Digite seu CPF (Apenas os números): 12345678909
+Digite seu nome: Luca Silva
+Digite sua data de nascimento (dd/mm/aaaa): 28/07/1995
+
+...
+
+[1] Acessar uma conta existente
+[2] Criar uma nova conta
+[0] Sair
+
+Escolha uma opção: 1
+
+...
+
+Luca | Agência: 0420 | Conta: 1
+
+[1] Depositar
+[2] Sacar
+[3] Extrato
+[0] Sair
+
+Escolha a operação: 1
+
+Digite o valor que o(a) senhor(a) deseja depositar: R$100
+Depósito realizado com sucesso!
+```
 
 ## 🤝 Contribuindo
 
@@ -80,4 +122,3 @@ Sinta-se à vontade para abrir uma issue, comentar ou fazer um fork.
 **Bootcamp Santander | DIO**  
 Projeto: Sistema Bancário com Python  
 Desenvolvido por [@LuccaDe](https://github.com/LuccaDe)
-
