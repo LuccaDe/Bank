@@ -1,81 +1,97 @@
-# Luca’s Bank 💰 – Versão 3
+# Luca’s Bank 💰 – Versão 4
 
-Este é um projeto em Python desenvolvido como parte do **Bootcamp Santander | DIO - Backend com Python**.
+**Sistema Bancário em Python com CLI Avançada**
 
-Este repositório contém a **terceira versão** do *Luca’s Bank*, um sistema bancário de linha de comando desenvolvido em Python, focado em boas práticas de Programação Orientada a Objetos (POO) e experiência do usuário.
+Nesta versão 4 do **Luca’s Bank**, ampliamos funcionalidades de persistência, logging e filtragem de extrato, além de introduzir um modo *admin* para iterar sobre todas as contas.
 
-## 🛠 Funcionalidades
+## 🛠 Funcionalidades Principais
 
-* **Cadastro de Usuário (Pessoa Física)**
+1. **Persistência de Dados**
 
-  * Validação de CPF com dígitos verificadores
-  * Entrada de data de nascimento formatada
-  * Endereço completo (rua, número, bairro, cidade/estado)
-* **Gerenciamento de Contas**
+   * Armazenamento de usuários em `users.csv`
+   * Armazenamento de contas em `accounts.csv` com histórico serializado em JSON
+   * Recuperação automática ao iniciar
 
-  * Várias contas por usuário
-  * Geração automática de agência (código aleatório) e número sequencial de conta
-* **Operações Bancárias**
+2. **Logging de Transações**
 
-  * Depósito: mínimo R\$ 1, registro em histórico
-  * Saque: mínimo R\$ 1, limite por valor e quantidade diária, registro em histórico
-* **Histórico de Transações**
+   * Decorator `@log_transacao` grava em `log.txt` timestamp, operação, parâmetros e retorno
 
-  * Exibição de tipo (Depósito/Saque), valor e timestamp local (fuso horário do usuário)
-  * Saldo disponível exibido junto
-* **Navegação via Menus CLI**
+3. **Cadastro e Autenticação**
 
-  * Menus de criação, acesso a contas e operações internas
-  * Uso de `match/case` para fluxo de seleção
+   * Validação completa de CPF e formato de data de nascimento
+   * Registro de endereço completo
+
+4. **Gerenciamento de Contas**
+
+   * Criação de contas sequenciais com agência aleatória
+   * Várias contas por usuário
+   * Propriedades de limite e limite de saques configuradas em `ContaCorrente`
+
+5. **Operações Bancárias**
+
+   * Depósito e saque com validações de valor, limite por valor e limites diários
+   * Histórico detalhado com data/hora local e opção de filtragem (Depósitos/Saques)
+
+6. **Navegação via Menus CLI**
+
+   * Menus de criação, acesso, operações e extrato (com filtros)
+   * Comando secreto `admin` para listar todas as contas via `IteradorContas`
+
 
 ## ⚙️ Estrutura do Código
 
-* **`Menus`**: Strings constantes para exibição de menus.
-* **`Conta` / `ContaCorrente`**: Lógica de saldo, limites e contador de saques.
-* **`Cliente` / `PessoaFisica`**: Armazenamento de contas e método `realizar_transacao`.
-* **`Historico`**: Registro e impressão de transações com data/hora local.
+* **`Menus`**: constantes de texto para todas as telas.
+* **`Conta`** e **`ContaCorrente`**: lógica de criação, depósito, saque e logging via decorator.
+* **`IteradorContas`**: permite iteração amigável para modo *admin*.
+* **`Cliente`** e **`PessoaFisica`**: abstração de usuário e método `realizar_transacao`.
+* **`Historico`**: registro de transações com campos `Transação`, `Valor`, `Data/Hora` e método `relatorio` com filtros CLI.
 * **`Transacao`** (abstrata) e classes **`Deposito`**, **`Saque`**.
-* **`Sessao`**: Controla o fluxo principal, validação de CPF, criação e acesso de contas.
+* **`Repositorio`**: persistência em CSV/JSON para usuários e contas.
+* **`Sessao`**: fluxo principal de menus, validações, chamadas de operações e persistência ao sair.
 
-## 🗒️ Changelog (V2 → V3)
+## 📝 Changelog (V3 → V4)
 
-* Adicionado timestamp local em cada transação
-* Centralização da lógica de transação em `Cliente.realizar_transacao`
-* Validação de data de nascimento com `datetime.strptime`
-* Aprimoramentos gerais de UX (mensagens e espaçamentos)
+* **Persistência** em CSV (`users.csv`, `accounts.csv`)
+* **Logging** de métodos críticos em `log.txt`
+* **Filtros de extrato** para saques e depósitos
+* **IteradorContas** para modo *admin*
+* Pequenas melhorias de UX e padronização de pausas
+* Correção de Bugs
 
-## 📈 Próximos Passos
+## 🚧 Próximos Passos
 
-* Persistência em JSON/CSV para manter dados entre sessões
-* Autenticação com senha/encriptação básica
-* Interface aprimorada com `Typer` ou `Rich`
-* Testes automatizados com `pytest`
+* Criação de **interface gráfica** (Tkinter/Streamlit)
+* **Segurança**: criptografia de dados sensíveis (CPF/senha)
+* **Testes unitários** e integração contínua (CI)
+* **API REST** para acesso remoto
+* Adição de banco de dados SQL para persistência de dados
 
 ## 📂 Como Executar
 
-1. **Clone o repositório e acesse a branch v3**:
+1. **Clone e entre na branch v4**:
 
    ```bash
    git clone https://github.com/LuccaDe/Bank.git
    cd Bank
-   git checkout v3
+   git checkout v4
    ```
-2. **Verifique sua versão do Python** (recomendado 3.9+):
+2. **Certifique-se de usar Python 3.9+**:
 
    ```bash
    python --version
    ```
-3. **Execute o script principal**:
+3. **Execute o programa**:
 
    ```bash
-   python bank_v3.py
+   python bank_v4.py
    ```
-4. **Siga as instruções na tela** para cadastrar usuário, criar/selecionar conta e realizar operações.
+4. **Saída**: Ao finalizar (`[0] Sair`), os arquivos CSV são atualizados e `log.txt` contém o histórico de chamadas.
 
-## 📈 Exemplos de Uso
+
+## 📈 Exemplo de Uso
 
 ```text
-$ python bank_v3.py
+$ python bank_v4.py
 
 Bem-Vindo(a) ao Luca's Bank
 
@@ -83,19 +99,23 @@ Bem-Vindo(a) ao Luca's Bank
 [2] Quero me cadastrar
 [0] Sair
 
-Escolha uma operação: 2
+Escolha uma opção: 2
 
 Digite seu CPF (Apenas os números): 12345678909
 Digite seu nome: Luca Silva
 Digite sua data de nascimento (dd/mm/aaaa): 28/07/1995
+Rua: Rua A
+Número: 123
+Bairro: Centro
+Cidade: Rio de Janeiro
+Estado (XX): RJ
 
 ...
 
 [1] Acessar uma conta existente
-[2] Criar uma nova conta
-[0] Sair
+[2] Criar nova conta
 
-Escolha uma opção: 1
+Escolha: 1
 
 ...
 
@@ -108,8 +128,26 @@ Luca | Agência: 0420 | Conta: 1
 
 Escolha a operação: 1
 
-Digite o valor que o(a) senhor(a) deseja depositar: R$100
+Digite o valor que o(a) senhor(a) deseja depositar: R$200
 Depósito realizado com sucesso!
+
+...
+
+-- Extrato (filtrar?) --
+[1] Sim
+[2] Não
+[0] Sair
+
+Escolha: 2
+================EXTRATO================
+28/07/2025 14:20:00 Depósito:  R$200.00
+
+Saldo:     R$200.00
+
+...
+
+-- Admin Mode --
+Digite `admin` no menu inicial para listar todas as contas.
 ```
 
 ## 🤝 Contribuindo
